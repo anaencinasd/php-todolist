@@ -15,10 +15,10 @@ class ToDoController{
     }
 
     public function store($data){
-        $server=getenv('SERVER');
-        $database=getenv('DATABASE');
-        $user=getenv('USER');
-        $password=getenv('PASSWORD');
+        $server=$_ENV['SERVER'];
+        $database=$_ENV['DATABASE'];
+        $user=$_ENV['USER'];
+        $password=$_ENV['PASSWORD'];
 
         $bd=new DatabaseConnection ($server, $database, $user, $password);
         $bd->connect();
