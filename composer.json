@@ -1,0 +1,13 @@
+{
+    "name": "user/php-todolist",
+    "autoload": {
+        "psr-4": {
+            "User\\PhpTodolist\\": "src/",
+            "Database\\":"database",
+            "App\\":"app"
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
