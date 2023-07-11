@@ -1,7 +1,7 @@
 <?php
 use App\Controllers\ToDocontroller;
-require "vendor/autoload.php";
-require_once "./config.php";
+require "/vendor/autoload.php";
+require_once "/config.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = [
@@ -15,3 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 $todo = new ToDoController;
 $todo -> store("todo", $data);
+print_r("La tarea se ha añadido correctamente");
+echo ("<a href='/Proyecto%206/php-todolist/index.php'>
+<button>Volver a la lista de tareas</button></a>");

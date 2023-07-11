@@ -32,7 +32,8 @@ class DatabaseConnection {
 
     public function get_data($query){
         $statement = $this -> connection->prepare($query);
-        $results = $statement -> execute($query);
+        $statement->execute();
+        $results=$statement->fetchAll(\PDO::FETCH_ASSOC);
         return $results;
     }
 

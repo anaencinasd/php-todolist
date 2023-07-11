@@ -4,7 +4,7 @@ namespace App\Controllers;
 require_once './config.php';
 
 use Database\PDO\DatabaseConnection;
-
+use DateTime;
 
 class ToDoController{
     public function index($table){
@@ -17,7 +17,8 @@ class ToDoController{
         $bd->connect();
         $query = "SELECT * FROM $table "; 
         $results = $bd-> get_data($query);
-        var_dump($results);
+        return ($results);
+        
        
     
     }
@@ -45,11 +46,41 @@ class ToDoController{
 
     }
 
-    public function edit(){
+    public function edit($table, $taskId){
+        $server=$_ENV['SERVER'];
+        $database=$_ENV['DATABASE'];
+        $user=$_ENV['USER'];
+        $password=$_ENV['PASSWORD'];
+
+        $bd = new DatabaseConnection($server, $database, $user, $password);
+        $bd -> connect();
+
+        $query = "SELECT * FROM $table WHERE id = ?";
+        $results = $bd->execute_query($query, [$taskId]);
+        if(!empty($results)){
+            $data = $results->fetch();
+            if($data === false){
+                return "No hay ninguna tarea para editar";
+            }
+            return $data;
+        } else {
+            return "No hay ninguna tarea para editar";
+        }
 
     }
 
-    public function update(){
+    public function update($table, $column, $oldData, $newData){
+        $server=$_ENV['SERVER'];
+        $database=$_ENV['DATABASE'];
+        $user=$_ENV['USER'];
+        $password=$_ENV['PASSWORD'];
+
+        $bd= new DatabaseConnection($server, $database, $user, $password);
+        $bd->connect();
+        $query ="UPDATE $table SET $column = ? WHERE $column = ? ";
+        $results = $bd->execute_query($query, [$oldData, $newData]
+);
+
 
     }
 
