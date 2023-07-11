@@ -30,6 +30,15 @@ class DatabaseConnection {
         return $results;
     }
 
+    public function get_data($query){
+        $statement = $this -> connection->prepare($query);
+        $results = $statement -> execute($query);
+        return $results;
+    }
+
+  
+
+
 }
 
 
