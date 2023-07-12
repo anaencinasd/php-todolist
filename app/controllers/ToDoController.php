@@ -7,7 +7,7 @@ use Database\PDO\DatabaseConnection;
 
 
 class ToDoController{
-    public function index($table){
+    public function index($table, $sort = null){
         $server=$_ENV['SERVER'];
         $database=$_ENV['DATABASE'];
         $user=$_ENV['USER'];
@@ -15,7 +15,15 @@ class ToDoController{
 
         $bd=new DatabaseConnection ($server, $database, $user, $password);
         $bd->connect();
-        $query = "SELECT * FROM $table "; 
+
+        $order = "";
+        if($sort == 'Title'){
+            $order = "ORDER BY Title ASC";
+        } else {
+            $order = "ORDER BY Deadline ASC";
+        }
+
+        $query = "SELECT * FROM $table $order "; 
         $results = $bd-> query($query);
         return ($results);
         

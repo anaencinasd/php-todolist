@@ -29,9 +29,17 @@
         <table class="min-w-full divide-y divide-gray-200 mt-4">
             <thead class="bg-gray-100">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha límite</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <a href="index.php?sort=Title"><i class="fas fa-sort-alpha-down"></i></a>
+                        Título
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Descripción                        
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <a href="index.php?sort=Date"><i class="fas fa-sort"></i></a>
+                        Fecha límite
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                 </tr>
@@ -43,8 +51,11 @@
 
                 require "vendor/autoload.php";
 
+                $sort= $_GET['sort'];
+                
+
                 $taskList = new ToDoController;
-                $results = $taskList->index("todo");
+                $results = $taskList->index("todo", $sort);
                 foreach ($results as $row) {
                     echo "<tr>";
                     echo "<td>" . $row["Title"] . "</td>";
@@ -64,7 +75,7 @@
                     echo "<td>
                     ";
                     if ($row["Done"]) {
-                        echo "<i class='fas fa-check text-green-500'></i>";
+                        echo "";
                     } else {
                         echo "<input type='checkbox'>";
                     }
