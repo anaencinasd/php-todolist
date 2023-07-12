@@ -93,14 +93,14 @@ class ToDoController{
         $bd->connect();
         $query ="DELETE FROM $table WHERE id = ? ";
 
-        $results = $bd->query($query, $taskId);
+       $bd->query($query, $taskId);
         
 
 
 
     }
 
-    public function done(){
+    public function done_update($table, $taskId){
         $server=$_ENV['SERVER'];
         $database=$_ENV['DATABASE'];
         $user=$_ENV['USER'];
@@ -108,8 +108,9 @@ class ToDoController{
 
         $bd=new DatabaseConnection($server, $database, $user, $password);
         $bd->connect();
-        $query="";
-        $results= bd->query($query, );
+        $query="UPDATE $table SET Done = 1 WHERE id = ?";
+        $bd->query($query, [$taskId]);
+        
 
     }
 

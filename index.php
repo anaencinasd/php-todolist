@@ -25,8 +25,7 @@
             <input type="submit" value="Agregar tarea" class="inline-block w-full px-4 py-2 mt-4 text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         </form>
     </div>
-    <div>
-        <!-- <h2 class="text-2xl font-bold text-center">Lista de tareas pendientes:</h2> -->
+    <div class="m-4">
         <table class="min-w-full divide-y divide-gray-200 mt-4">
             <thead class="bg-gray-100">
                 <tr>
@@ -34,6 +33,7 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha límite</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -60,9 +60,15 @@
                         </a>
                     </div>
                     </td>";
+
                     echo "<td>
-                    'Si la tarea está completada, se tiene que ver tachada  si no está completada: tiene que salir un cuadro para check'
-                    </td>";
+                    ";
+                    if ($row["Done"]) {
+                        echo "<i class='fas fa-check text-green-500'></i>";
+                    } else {
+                        echo "<input type='checkbox'>";
+                    }
+                    echo "</td>";
 
                     echo "</tr>";
                 }
