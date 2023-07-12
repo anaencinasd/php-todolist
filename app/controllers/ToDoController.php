@@ -4,7 +4,7 @@ namespace App\Controllers;
 require_once './config.php';
 
 use Database\PDO\DatabaseConnection;
-use DateTime;
+
 
 class ToDoController{
     public function index($table){
@@ -16,7 +16,7 @@ class ToDoController{
         $bd=new DatabaseConnection ($server, $database, $user, $password);
         $bd->connect();
         $query = "SELECT * FROM $table "; 
-        $results = $bd-> get_data($query);
+        $results = $bd-> query($query);
         return ($results);
         
        
@@ -36,7 +36,7 @@ class ToDoController{
         $bd=new DatabaseConnection ($server, $database, $user, $password);
         $bd->connect();
         $query = "INSERT INTO $table (Title, Description, Deadline) VALUES (?, ?, ?)";
-        $results = $bd-> execute_query($query, [$data['Title'],
+        $results = $bd-> query($query, [$data['Title'],
                                                 $data['Description'],
                                                 $data ['Deadline']]);
       
@@ -56,20 +56,18 @@ class ToDoController{
         $bd -> connect();
 
         $query = "SELECT * FROM $table WHERE id = ?";
-        $results = $bd->execute_query($query, [$taskId]);
-        if(!empty($results)){
-            $data = $results->fetch();
-            if($data === false){
-                return "No hay ninguna tarea para editar";
-            }
-            return $data;
+        $results = $bd->query($query, [$taskId]);
+        
+        if(!empty($results)) {
+            return $results[0];
         } else {
             return "No hay ninguna tarea para editar";
+
         }
 
     }
 
-    public function update($table, $column, $oldData, $newData){
+    public function update($table, $taskId, $data){
         $server=$_ENV['SERVER'];
         $database=$_ENV['DATABASE'];
         $user=$_ENV['USER'];
@@ -77,19 +75,48 @@ class ToDoController{
 
         $bd= new DatabaseConnection($server, $database, $user, $password);
         $bd->connect();
-        $query ="UPDATE $table SET $column = ? WHERE $column = ? ";
-        $results = $bd->execute_query($query, [$oldData, $newData]
-);
+        $query ="UPDATE $table SET Title = ?, Description=?, Deadline = ? WHERE id = ? ";
+
+        $bd->query($query, [$data ['Title'], $data['Description'], $data ['Deadline'], $taskId]);
+
+
+
+    }
+
+    public function destroy($table, $taskId){
+        $server=$_ENV['SERVER'];
+        $database=$_ENV['DATABASE'];
+        $user=$_ENV['USER'];
+        $password=$_ENV['PASSWORD'];
+
+        $bd= new DatabaseConnection($server, $database, $user, $password);
+        $bd->connect();
+        $query ="DELETE FROM $table WHERE id = ? ";
+
+        $results = $bd->query($query, $taskId);
+        
+
 
 
     }
 
-    public function destroy(){
+    public function done(){
+        $server=$_ENV['SERVER'];
+        $database=$_ENV['DATABASE'];
+        $user=$_ENV['USER'];
+        $password=$_ENV['PASSWORD'];
+
+        $bd=new DatabaseConnection($server, $database, $user, $password);
+        $bd->connect();
+        $query="";
+        $results= bd->query($query, );
+
+    }
 
     }
 
 
-}
+
 
 
 

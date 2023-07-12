@@ -9,10 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newDescription = $_POST["description"];
     $newDeadline = $_POST["deadline"];
 
+    $data = [
+        'Title' =>$newTitle,
+        'Description'=>$newDescription,
+        'Deadline' =>$newDeadline,
+    ];
+
     $update = new ToDoController;
-    $update->update("todo", "Title", $newTitle, $taskId);
-    $update->update("todo", "Description", $newDescription, $taskId);
-    $update->update("todo", "Deadline", $newDeadline, $taskId);
+    $update->update("todo", $taskId, $data);
+    
 
     echo "La tarea se ha editado correctamente";
     echo "<a href='index.php'>Volver a la lista de tareas</a>";
@@ -21,12 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $taskId = $_GET["id"];
 
         $taskList = new ToDoController;
-        $task = $taskList->edit("todo", $taskId);
+        $task = $taskList->edit("todo", $taskId, $data);
 
         if ($task === "No hay ninguna tarea para editar") {
             echo $task;
         } else {
-            // Mostrar formulario con los datos de la tarea
             echo "<form action='update-task.php' method='POST'>";
             echo "<input type='hidden' name='id' value='" . $task["id"] . "'>";
             echo "<label for='title'>Título:</label>";
@@ -39,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "</form>";
         }
     } else {
-        echo "ID de tarea no proporcionado.";
+        echo "No has seleccionado ninguna tarea";
     }
 }
-?>

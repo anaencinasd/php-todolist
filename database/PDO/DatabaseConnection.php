@@ -9,6 +9,7 @@ class DatabaseConnection {
     private $username;
     private $password;
     private $connection;
+    
 
     public function __construct($server, $database, $username, $password){
         $this ->server = $server;
@@ -24,23 +25,35 @@ class DatabaseConnection {
         $set_names->execute();
     }
 
-    public function execute_query($query, $parameters = []){
-        $statement = $this -> connection->prepare($query);
-        $results = $statement ->execute ($parameters);
-        return $results;
-    }
+    // public function execute_query($query, $parameters = []){
+    //     $statement = $this -> connection->prepare($query);
+    //     $results = $statement ->execute ($parameters);
+    //     return $results;
+    // }
 
-    public function get_data($query){
-        $statement = $this -> connection->prepare($query);
-        $statement->execute();
-        $results=$statement->fetchAll(\PDO::FETCH_ASSOC);
-        return $results;
-    }
+    // public function get_data($query){
+    //     $statement = $this -> connection->prepare($query);
+    //     $statement->execute();
+    //     $results=$statement->fetchAll(\PDO::FETCH_ASSOC);
+    //     return $results;
+    // }
 
-  
+    public function query($query, $parameters=[]){
+        $statement = $this -> connection->prepare($query);
+        $statement ->execute ($parameters);
+
+        $SelectQuery = strtoupper(substr(trim($query), 0, 6)) === 'SELECT';
+        if($SelectQuery){
+            return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        } else {
+            return $statement;
+        }
+        
+    
 
 
 }
+};
 
 
 

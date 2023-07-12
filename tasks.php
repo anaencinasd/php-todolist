@@ -1,7 +1,7 @@
 <?php
 use App\Controllers\ToDocontroller;
-require "/vendor/autoload.php";
-require_once "/config.php";
+require "vendor/autoload.php";
+require_once "config.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = [

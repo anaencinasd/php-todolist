@@ -4,36 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de tareas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
 </head>
 
 <body>
     <header>
 
+
     </header>
-    <div>
-        <form action="tasks.php" method="POST">
-            <label for="ToDo">Introduce una tarea</label>
-            <input type="text" id="title" name="title" required>
-            <label for="ToDo">Introduce una descripción</label>
-            <input type="text" id="description" name="description" required>
-            <label for="ToDo">¿Para cuándo es?</label>
-            <input type="date" id="deadline" name="deadline">
-            <input type="submit" value="Agregar tarea">
+    <div class="max-w-sm mx-auto m-4">
+        <form action="tasks.php" method="POST" class="object-position: center max-w-sm m-4">
+            <label for="ToDo" class="text-gray-700">Tarea</label>
+            <input type="text" id="title" name="title" placeholder="Escribe la tarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+            <label for="ToDo" class="mt-4 text-gray-700">Descripción</label>
+            <input type="text" id="description" name="description" placeholder="Escribe una breve descripción de la tarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+            <label for="ToDo" class="mt-4 text-gray-700">¿Para cuándo es?</label>
+            <input type="date" id="deadline" name="deadline" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            <input type="submit" value="Agregar tarea" class="inline-block w-full px-4 py-2 mt-4 text-white bg-indigo-500 rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         </form>
     </div>
     <div>
-        <h2>Lista de tareas pendientes:</h2>
-        <table>
-            <thead>
+        <!-- <h2 class="text-2xl font-bold text-center">Lista de tareas pendientes:</h2> -->
+        <table class="min-w-full divide-y divide-gray-200 mt-4">
+            <thead class="bg-gray-100">
                 <tr>
-                    <th>Título</th>
-                    <th>Descripción</th>
-                    <th>Fecha límite</th>
-                    <th>Acciones</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Título</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha límite</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-white divide-y divide-gray-200">
                 <?php
 
                 use App\Controllers\ToDoController;
@@ -45,10 +48,22 @@
                 foreach ($results as $row) {
                     echo "<tr>";
                     echo "<td>" . $row["Title"] . "</td>";
-                    echo "<td>" . $row["Description"] . "</td>";
-                    echo "<td>" . $row["Deadline"] . "</td>";
-                    echo "<td><a href='update-task.php?id=" . $row["id"] . "'><button>EDITAR TAREA</button><a/></td>";
-                    echo "<td><a><button>BORRAR TAREA</button><a/></td>";
+                    echo "<td class='px-6 py-4 whitespace-normal'>" . $row["Description"] . "</td>";
+                    echo "<td class='px-6 py-4 whitespace-nowrap'>" . $row["Deadline"] . "</td>";
+                    echo "<td class='px-6 py-4 whitespace-nowrap'>
+                    <div class='flex gap-2 items-center'>
+                        <a href='update-task.php?id=" . $row["id"] . "'>
+                        <i class='fas fa-edit text-indigo-500 hover:text-indigo-700'></i>
+                        </a>
+                        <a href='delete-task.php?id=" . $row["id"] . "'>
+                        <i class='fas fa-trash text-indigo-500 hover:text-indigo-700'></i>
+                        </a>
+                    </div>
+                    </td>";
+                    echo "<td>
+                    'Si la tarea está completada, se tiene que ver tachada  si no está completada: tiene que salir un cuadro para check'
+                    </td>";
+
                     echo "</tr>";
                 }
                 ?>
