@@ -53,12 +53,12 @@ class ToDoController
 
     public function store($table, $data)
     {
-        $query = "INSERT INTO $table (Title, Description, Deadline) VALUES (?, ?, ?)";
-        $this->connection->query($query, [
-            $data['Title'],
-            $data['Description'],
-            $data['Deadline']
-        ]);
+        $column = implode(', ', array_keys($data));
+        $placeholder = implode(', ', array_fill(0, count($data), '?'));
+
+        $query = "INSERT INTO $table ($column) VALUES ($placeholder)";
+        $values = array_values($data);
+        $this->connection->query($query, $values);
     }
 
     public function edit($table, $taskId)

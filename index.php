@@ -21,7 +21,10 @@
             <i class="fas fa-clipboard-list text-indigo-500 hover:text-indigo-700 m-4"></i>
           </a>
           <div class="relative ml-2">
-            <button class="flex items-center px-6 pb-2 pt-2.5 text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-400 lg:px-2" type="button" id="dropdownMenuButton2" aria-expanded="false" onclick="toggleDropdownMenu()">
+            <button class="flex items-center px-6 pb-2 pt-2.5 text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-400 lg:px-2" 
+            type="button" id="dropdownMenuButton2" 
+            aria-expanded="false" 
+            onclick="toggleDropdownMenu()">
               Filtrar tareas
               <span class="ml-2 w-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
@@ -29,7 +32,8 @@
                 </svg>
               </span>
             </button>
-            <ul id="dropdownMenu" class="absolute z-[1000] left-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-lg dark:bg-neutral-700 hidden" aria-labelledby="dropdownMenuButton2">
+            <ul id="dropdownMenu" class="absolute z-[1000] left-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-lg dark:bg-neutral-700 hidden" 
+            aria-labelledby="dropdownMenuButton2">
               <li>
                 <a class="block px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600" href="index.php?sort=pending" data-filter="pending">Mostrar tareas pendientes</a>
               </li>
@@ -50,7 +54,17 @@
           <div class="absolute top-0 left-0 mt-3 ml-3 text-gray-600">
             <i class="fas fa-search"></i>
           </div>
+          
         </div>
+        
+        <div class="relative">
+        <a href="login.php">
+          <button class="inline-block px-4 py-2 text-indigo-500 bg-white border border-indigo-500 rounded-full shadow-sm hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">Login</button>
+        </a>
+        <a href="signin.php">
+          <button class="inline-block ml-4 px-4 py-2 text-white bg-indigo-500 border border-indigo-500 rounded-full shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Registrarse</button>
+        </a>
+      </div>
       </div>
     </nav>
   </header>
