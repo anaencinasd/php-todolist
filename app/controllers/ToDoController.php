@@ -2,131 +2,92 @@
 
 namespace App\Controllers;
 require_once './config.php';
-
 use Database\PDO\DatabaseConnection;
 
+class ToDoController
+{
+    private $server;
+    private $database;
+    private $user;
+    private $password;
+    private $connection;
 
-class ToDoController{
-    public function index($table, $sort = null){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
 
-        $bd=new DatabaseConnection ($server, $database, $user, $password);
-        $bd->connect();
+    public function __construct()
+    {
+        $this->server = $_ENV['SERVER'];
+        $this->database = $_ENV['DATABASE'];
+        $this->user = $_ENV['USER'];
+        $this->password = $_ENV['PASSWORD'];
 
+        $this->connection = new DatabaseConnection($this->server, $this->database, $this->user, $this->password);
+        $this->connection->connect();
+    }
+
+    public function index($table, $sort = null)
+    {
         $order = "";
-        if($sort == 'Title'){
-            $order = "ORDER BY Title ASC";
-        } else {
+
+        if ($sort == 'Date') {
             $order = "ORDER BY Deadline ASC";
+        } else {
+            $order = "ORDER BY id DESC";
         }
 
-        $query = "SELECT * FROM $table $order "; 
-        $results = $bd-> query($query);
-        return ($results);
-        
-       
-    
+        $filter = "";
+
+        if ($sort == 'pending') {
+            $filter = "WHERE Done = 0";
+        } elseif ($sort == 'complete') {
+            $filter = "WHERE Done = 1";
+        } elseif ($sort == 'next') {
+            $filter = "WHERE Done = 0";
+            $order = "ORDER BY id ASC";
+        }
+
+        $query = "SELECT * FROM $table $filter $order";
+        $results = $this->connection->query($query);
+
+        return $results;
     }
 
-    public function create(){
-
-    }
-
-    public function store($table, $data){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
-
-        $bd=new DatabaseConnection ($server, $database, $user, $password);
-        $bd->connect();
+    public function store($table, $data)
+    {
         $query = "INSERT INTO $table (Title, Description, Deadline) VALUES (?, ?, ?)";
-        $results = $bd-> query($query, [$data['Title'],
-                                                $data['Description'],
-                                                $data ['Deadline']]);
-      
+        $this->connection->query($query, [
+            $data['Title'],
+            $data['Description'],
+            $data['Deadline']
+        ]);
     }
 
-    public function show(){
-
-    }
-
-    public function edit($table, $taskId){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
-
-        $bd = new DatabaseConnection($server, $database, $user, $password);
-        $bd -> connect();
-
+    public function edit($table, $taskId)
+    {
         $query = "SELECT * FROM $table WHERE id = ?";
-        $results = $bd->query($query, [$taskId]);
-        
-        if(!empty($results)) {
+        $results = $this->connection->query($query, [$taskId]);
+
+        if (!empty($results)) {
             return $results[0];
         } else {
             return "No hay ninguna tarea para editar";
-
         }
-
     }
 
-    public function update($table, $taskId, $data){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
-
-        $bd= new DatabaseConnection($server, $database, $user, $password);
-        $bd->connect();
-        $query ="UPDATE $table SET Title = ?, Description=?, Deadline = ? WHERE id = ? ";
-
-        $bd->query($query, [$data ['Title'], $data['Description'], $data ['Deadline'], $taskId]);
-
-
-
+    public function update($table, $taskId, $data)
+    {
+        $query = "UPDATE $table SET Title = ?, Description=?, Deadline = ? WHERE id = ?";
+        $this->connection->query($query, [$data['Title'], $data['Description'], $data['Deadline'], $taskId]);
     }
 
-    public function destroy($table, $taskId){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
-
-        $bd= new DatabaseConnection($server, $database, $user, $password);
-        $bd->connect();
-        $query ="DELETE FROM $table WHERE id = ? ";
-
-       $bd->query($query, $taskId);
-        
-
-
-
+    public function destroy($table, $taskId)
+    {
+        $query = "DELETE FROM $table WHERE id = ?";
+        $this->connection->query($query, $taskId);
     }
 
-    public function done_update($table, $taskId){
-        $server=$_ENV['SERVER'];
-        $database=$_ENV['DATABASE'];
-        $user=$_ENV['USER'];
-        $password=$_ENV['PASSWORD'];
-
-        $bd=new DatabaseConnection($server, $database, $user, $password);
-        $bd->connect();
-        $query="UPDATE $table SET Done = 1 WHERE id = ?";
-        $bd->query($query, [$taskId]);
-        
-
+    public function done_update($table, $taskId, $done = 1)
+    {
+        $query = "UPDATE $table SET Done = ? WHERE id = ?";
+        $this->connection->query($query, [$done, $taskId]);
     }
-
-    }
-
-
-
-
-
-
-?>
+}
