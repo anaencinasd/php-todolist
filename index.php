@@ -10,6 +10,7 @@
 </head>
 
 <body>
+   
     <header>
 
 
@@ -51,7 +52,8 @@
 
                 require "vendor/autoload.php";
 
-                $sort= $_GET['sort'];
+                $sort = isset($_GET['sort']) ? $_GET['sort'] : null;
+
                 
 
                 $taskList = new ToDoController;
@@ -72,13 +74,18 @@
                     </div>
                     </td>";
 
-                    echo "<td>
-                    ";
+                    echo "<td>";
+
+                    echo "<form action='done-task.php' method='POST'>";
                     if ($row["Done"]) {
-                        echo "";
-                    } else {
-                        echo "<input type='checkbox'>";
-                    }
+                                        echo "";
+                                    } else {
+                                        echo "<input type='checkbox' onChange='this.form.submit()'>";
+                                    }
+                
+                    echo "</form>";
+
+                    
                     echo "</td>";
 
                     echo "</tr>";
@@ -93,3 +100,4 @@
 </body>
 
 </html>
+
