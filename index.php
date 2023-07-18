@@ -35,7 +35,8 @@
             <ul id="dropdownMenu" class="absolute z-[1000] left-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-lg dark:bg-neutral-700 hidden" 
             aria-labelledby="dropdownMenuButton2">
               <li>
-                <a class="block px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600" href="index.php?sort=pending" data-filter="pending">Mostrar tareas pendientes</a>
+                <a class="block px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600" 
+                href="index.php?sort=pending" data-filter="pending">Mostrar tareas pendientes</a>
               </li>
               <li>
                 <a class="block px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline dark:text-neutral-200 dark:hover:bg-neutral-600" href="index.php?sort=complete" data-filter="completed">Mostrar tareas completadas</a>
